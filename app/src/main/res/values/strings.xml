@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">OnlineShoppingStore</string>
+    <string name="store_title">美衣商城</string>
+    <string name="clothing_image_desc">服装图片</string>
+</resources>
