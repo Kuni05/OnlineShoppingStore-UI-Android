@@ -2,7 +2,9 @@ package com.example.onlineshoppingstore
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import androidx.activity.ComponentActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -25,8 +27,8 @@ class MainActivity : ComponentActivity() {
         )
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerClothes)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-        recyclerView.adapter = ClothingAdapter(clothes) { item, position ->
+        val searchInput = findViewById<EditText>(R.id.etSearch)
+        val clothingAdapter = ClothingAdapter(clothes) { item, position ->
             if (position < 3) {
                 startActivity(
                     Intent(this, DetailActivity::class.java).apply {
@@ -37,8 +39,15 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.adapter = clothingAdapter
         val spacing = (8 * resources.displayMetrics.density).toInt()
         recyclerView.addItemDecoration(GridSpacingItemDecoration(2, spacing, true))
+
+        searchInput.doAfterTextChanged { editable ->
+            clothingAdapter.updateQuery(editable?.toString().orEmpty())
+        }
     }
 }
 

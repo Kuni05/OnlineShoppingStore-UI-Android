@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class ClothingAdapter(
-    private val items: List<ClothingItem>,
+    private val allItems: List<ClothingItem>,
     private val onItemClick: (ClothingItem, Int) -> Unit
 ) : RecyclerView.Adapter<ClothingAdapter.ClothingViewHolder>() {
+
+    private val filteredItems = allItems.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClothingViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -19,19 +21,38 @@ class ClothingAdapter(
     }
 
     override fun onBindViewHolder(holder: ClothingViewHolder, position: Int) {
-        val item = items[position]
+        val item = filteredItems[position]
         holder.bind(item)
 
-        if (position < 3) {
+        val sourceIndex = allItems.indexOf(item)
+
+        if (sourceIndex in 0..2) {
             holder.itemView.alpha = 1f
-            holder.itemView.setOnClickListener { onItemClick(item, position) }
+            holder.itemView.setOnClickListener { onItemClick(item, sourceIndex) }
         } else {
             holder.itemView.alpha = 0.96f
             holder.itemView.setOnClickListener(null)
         }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = filteredItems.size
+
+    fun updateQuery(query: String) {
+        val keyword = query.trim()
+        filteredItems.clear()
+
+        if (keyword.isEmpty()) {
+            filteredItems.addAll(allItems)
+        } else {
+            filteredItems.addAll(
+                allItems.filter { item ->
+                    item.name.contains(keyword, ignoreCase = true) ||
+                        item.price.contains(keyword, ignoreCase = true)
+                }
+            )
+        }
+        notifyDataSetChanged()
+    }
 
     class ClothingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val image: ImageView = itemView.findViewById(R.id.ivCloth)

@@ -4,5 +4,6 @@
     <string name="store_subtitle">今日上新 30+ 款，精选好物低至 5 折</string>
     <string name="clothing_image_desc">服装图片</string>
     <string name="search_desc">搜索商品</string>
+    <string name="search_hint">搜索商品名称，如卫衣、连衣裙</string>
     <string name="cart_desc">购物车</string>
 </resources>
