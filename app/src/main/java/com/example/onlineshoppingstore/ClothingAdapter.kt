@@ -25,14 +25,8 @@ class ClothingAdapter(
         holder.bind(item)
 
         val sourceIndex = allItems.indexOf(item)
-
-        if (sourceIndex in 0..2) {
-            holder.itemView.alpha = 1f
-            holder.itemView.setOnClickListener { onItemClick(item, sourceIndex) }
-        } else {
-            holder.itemView.alpha = 0.96f
-            holder.itemView.setOnClickListener(null)
-        }
+        holder.itemView.alpha = 1f
+        holder.itemView.setOnClickListener { onItemClick(item, sourceIndex) }
     }
 
     override fun getItemCount(): Int = filteredItems.size

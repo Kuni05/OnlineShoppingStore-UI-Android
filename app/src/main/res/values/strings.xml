@@ -6,4 +6,6 @@
     <string name="search_desc">搜索商品</string>
     <string name="search_hint">搜索商品名称，如卫衣、连衣裙</string>
     <string name="cart_desc">购物车</string>
+    <string name="detail_intro_title">商品介绍</string>
+    <string name="detail_desc_fallback">该商品暂无介绍，欢迎咨询客服获取更多细节。</string>
 </resources>
